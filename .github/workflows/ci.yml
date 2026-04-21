@@ -12,10 +12,10 @@ jobs:
     runs-on: [self-hosted, Linux, X64, synology, shell-only, private]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
+      - name: Show runner Node
+        run: |
+          node --version
+          npm --version
       - run: npm ci
       - run: npm run sync:data
       - run: npm run lint
