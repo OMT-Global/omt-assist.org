@@ -1,27 +1,18 @@
 import type { Metadata } from "next";
-import { loadProfile, loadProjects, loadResume } from "@/lib/content";
-import { HomeShowcase } from "@/components/home/home-showcase";
-import { PersonStructuredData, ProjectsStructuredData } from "@/components/structured-data";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "OMT Assist"
+    absolute: "OMT"
   },
-  description: "Home page for the OMT Assist operational site."
+  description: "OMT placeholder site."
 };
 
-export default async function HomePage() {
-  const [profile, projectsPayload, resume] = await Promise.all([
-    loadProfile(),
-    loadProjects(),
-    loadResume()
-  ]);
-
+export default function HomePage() {
   return (
-    <>
-      <PersonStructuredData profile={profile} />
-      <ProjectsStructuredData projects={projectsPayload} />
-      <HomeShowcase profile={profile} projects={projectsPayload} resume={resume} />
-    </>
+    <main className="grid min-h-screen place-items-center px-6">
+      <h1 className="text-center text-6xl font-semibold tracking-normal text-foreground sm:text-7xl">
+        OMT
+      </h1>
+    </main>
   );
 }
