@@ -1,0 +1,34 @@
+{
+  "updatedAt": "2026-04-21T00:00:00Z",
+  "experience": [
+    {
+      "title": "Operations assistance workspace",
+      "org": "OMT Global",
+      "startAt": "2026-04-21",
+      "bullets": [
+        "Provides a structured site shell for operational notes and project-facing context.",
+        "Keeps machine-readable public data synchronized from source content.",
+        "Uses the same GitHub Actions and Cloudflare Pages deployment pattern as jmcte.me."
+      ]
+    }
+  ],
+  "education": [],
+  "skills": {
+    "technical": ["Next.js", "TypeScript", "Tailwind CSS", "GitHub Actions", "Cloudflare Pages"],
+    "tools": ["npm", "Vitest", "ESLint"],
+    "soft": ["Operational clarity", "Implementation handoffs", "Documentation discipline"]
+  },
+  "patents": [],
+  "publications": [],
+  "certifications": [],
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/OMT-Global/omt-assist.org"
+    },
+    {
+      "label": "Site",
+      "url": "https://omt-assist.org"
+    }
+  ]
+}

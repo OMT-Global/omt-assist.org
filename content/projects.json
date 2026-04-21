@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-04-21T00:00:00Z",
+  "projects": [
+    {
+      "id": "omt-assist",
+      "title": "OMT Assist",
+      "summary": "Private assistance site and agent-readable project surface for OMT Global operational work.",
+      "stack": ["Next.js", "TypeScript", "Tailwind CSS", "GitHub Actions", "Cloudflare Pages"],
+      "github": "https://github.com/OMT-Global/omt-assist.org",
+      "url": "https://omt-assist.org",
+      "status": "active",
+      "featured": true,
+      "startedAt": "2026-04-21"
+    }
+  ]
+}

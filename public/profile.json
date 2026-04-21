@@ -1,0 +1,26 @@
+{
+  "name": "OMT Assist",
+  "handle": "omt-assist",
+  "title": "Operations assistance and automation surface for OMT Global",
+  "bio": "A private OMT Global assistance surface for operational workflows, implementation notes, and agent-readable project context.",
+  "location": "United States",
+  "website": "https://omt-assist.org",
+  "updatedAt": "2026-04-21T00:00:00Z",
+  "socials": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/OMT-Global/omt-assist.org",
+      "handle": "OMT-Global/omt-assist.org"
+    }
+  ],
+  "availability": "Private OMT Global workspace.",
+  "skills": [
+    "Operational Workflow",
+    "Agent Context",
+    "Automation",
+    "Runbooks",
+    "Project Notes"
+  ],
+  "contactVisibility": "private",
+  "certifications": []
+}
