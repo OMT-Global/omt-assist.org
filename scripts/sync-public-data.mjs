@@ -73,11 +73,11 @@ async function main() {
     { loc: "https://omt-assist.org/resume.json", priority: "0.50" }
   ];
 
-  const now = new Date().toISOString();
+  const lastModified = projects.generatedAt;
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">\n${sitePages
     .map(
       ({ loc, priority }) =>
-        `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${now}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`
+        `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastModified}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>\n  </url>`
     )
     .join("\n")}\n</urlset>\n`;
 
@@ -103,7 +103,7 @@ async function main() {
 
   await copyMarkdownArtifacts();
 
-  const avatarSvg = `\n<svg width=\"240\" height=\"240\" viewBox=\"0 0 240 240\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <rect width=\"240\" height=\"240\" rx=\"40\" fill=\"%231f2937\"/>\n  <circle cx=\"120\" cy=\"102\" r=\"40\" fill=\"%23f97316\"/>\n  <text x=\"120\" y=\"155\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"60\" fill=\"%23f8fafc\" font-weight=\"700\">J</text>\n  <text x=\"120\" y=\"205\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"44\" fill=\"%23f8fafc\" font-weight=\"600\">M T E</text>\n</svg>\n`;
+  const avatarSvg = `\n<svg width=\"240\" height=\"240\" viewBox=\"0 0 240 240\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <rect width=\"240\" height=\"240\" rx=\"40\" fill=\"%231f2937\"/>\n  <circle cx=\"120\" cy=\"102\" r=\"40\" fill=\"%23f97316\"/>\n  <text x=\"120\" y=\"155\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"60\" fill=\"%23f8fafc\" font-weight=\"700\">OMT</text>\n  <text x=\"120\" y=\"205\" text-anchor=\"middle\" font-family=\"Arial, sans-serif\" font-size=\"34\" fill=\"%23f8fafc\" font-weight=\"600\">Assist</text>\n</svg>\n`;
   await writeFile(path.join(avatarDir, "profile.svg"), avatarSvg, "utf8");
 }
 
