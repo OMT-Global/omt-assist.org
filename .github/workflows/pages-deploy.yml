@@ -9,7 +9,7 @@ on:
 jobs:
   build-and-deploy:
     name: Build and Deploy
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64, synology, shell-only, private]
     permissions:
       contents: read
       deployments: write
