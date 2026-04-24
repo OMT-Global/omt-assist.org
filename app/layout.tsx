@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     default: "OMT",
     template: "%s | OMT"
   },
-  description: "OMT placeholder site."
+  description: "OMT"
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${displayFont.variable} ${codeFont.variable}`}>
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      <body className="min-h-screen bg-white text-black antialiased">
         {children}
       </body>
     </html>
