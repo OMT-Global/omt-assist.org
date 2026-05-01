@@ -2,17 +2,22 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "OMT"
+    absolute: "OMT Assist"
   },
-  description: "OMT placeholder site."
+  description: "OMT Assist."
 };
 
 export default function HomePage() {
   return (
-    <main className="grid min-h-screen place-items-center bg-white px-6">
-      <h1 className="text-center text-6xl font-semibold tracking-normal text-black sm:text-7xl">
-        OMT
-      </h1>
+    <main
+      aria-label="OMT Assist"
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage:
+          "url('/omt-assist/ig_0cea3c1c0cf26aec0169f51036527c819b9e500524417054fb.png')"
+      }}
+    >
+      <span className="sr-only">OMT Assist</span>
     </main>
   );
 }
