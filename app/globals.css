@@ -9,3 +9,16 @@
     margin: 0;
   }
 }
+
+@layer components {
+  .landing-hero {
+    background-position: 64% center;
+  }
+}
+
+@media (max-width: 767px) {
+  .landing-hero {
+    min-height: 92vh;
+    background-position: 72% center;
+  }
+}
