@@ -33,7 +33,9 @@ const config: Config = {
         accent: "hsl(var(--accent))",
         "accent-foreground": "hsl(var(--accent-foreground))",
         destructive: "hsl(var(--destructive))",
-        "destructive-foreground": "hsl(var(--destructive-foreground))"
+        "destructive-foreground": "hsl(var(--destructive-foreground))",
+        ink: "hsl(var(--ink))",
+        paper: "hsl(var(--paper))"
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -41,8 +43,9 @@ const config: Config = {
         "2xl": "calc(var(--radius) + 10px)"
       },
       fontFamily: {
-        sans: ["var(--font-display)", "system-ui", "sans-serif"],
-        mono: ["var(--font-code)", "ui-monospace", "SFMono-Regular", "monospace"]
+        display: ["var(--font-display)", "Georgia", "Cambria", "serif"],
+        mono: ["var(--font-code)", "ui-monospace", "SFMono-Regular", "monospace"],
+        sans: ["var(--font-code)", "ui-monospace", "SFMono-Regular", "monospace"]
       },
       keyframes: {
         fadeIn: {
@@ -56,6 +59,30 @@ const config: Config = {
         float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-8px)" }
+        },
+        "drift-a": {
+          from: { transform: "translate3d(-4%, -2%, 0) scale(1)" },
+          to: { transform: "translate3d(5%, 6%, 0) scale(1.15)" }
+        },
+        "drift-b": {
+          from: { transform: "translate3d(3%, 5%, 0) scale(1.1)" },
+          to: { transform: "translate3d(-5%, -3%, 0) scale(0.95)" }
+        },
+        "caret-blink": {
+          "0%, 55%": { opacity: "1" },
+          "56%, 100%": { opacity: "0" }
+        },
+        "ring-spin": {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" }
+        },
+        "ping-dot": {
+          "0%": { transform: "scale(0.6)", opacity: "0.85" },
+          "80%, 100%": { transform: "scale(2.2)", opacity: "0" }
+        },
+        "cue-drop": {
+          "0%, 100%": { transform: "translateY(0)", opacity: "0.9" },
+          "55%": { transform: "translateY(7px)", opacity: "0.35" }
         }
       },
       animation: {
