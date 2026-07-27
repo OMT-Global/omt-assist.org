@@ -19,10 +19,10 @@ const codeFont = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "OMT",
-    template: "%s | OMT"
+    default: "OMT Assist",
+    template: "%s | OMT Assist"
   },
-  description: "OMT",
+  description: "The day, gently handled.",
   manifest: "/site.webmanifest",
   icons: {
     icon: [
