@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, JetBrains_Mono } from "next/font/google";
 import "@/app/globals.css";
 
-const displayFont = Geist({
+const displayFont = Fraunces({
   variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
   display: "swap"
 });
 
-const codeFont = Geist_Mono({
+const codeFont = JetBrains_Mono({
   variable: "--font-code",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
   display: "swap"
 });
 
@@ -36,7 +41,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${displayFont.variable} ${codeFont.variable}`}>
-      <body className="min-h-screen bg-white text-black antialiased">
+      <body className="min-h-screen bg-background text-foreground antialiased">
         {children}
       </body>
     </html>

@@ -4,15 +4,46 @@ import HomePage from "@/app/page";
 import OMTGlobalPage from "@/app/omt-global/page";
 
 describe("route pages", () => {
-  it("renders the OMT Assist background page", () => {
-    const { container } = render(<HomePage />);
-    const main = screen.getByRole("main", { name: "OMT Assist" });
+  it("renders the OMT Assist operations homepage", async () => {
+    render(await HomePage());
 
-    expect(main).toHaveStyle({
-      backgroundImage:
-        "url('/omt-assist/ig_0cea3c1c0cf26aec0169f51036527c819b9e500524417054fb.png')"
-    });
-    expect(container.querySelector("h1")).not.toBeInTheDocument();
+    const main = screen.getByRole("main", { name: "OMT Assist" });
+    expect(main).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("heading", {
+        level: 1,
+        name: /The quiet layer behind/
+      })
+    ).toBeInTheDocument();
+    expect(screen.getByText("operated systems.")).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("link", { name: /Inspect the surface/ })
+    ).toHaveAttribute("href", "#artifacts");
+    expect(screen.getByRole("link", { name: /Access policy/ })).toHaveAttribute(
+      "href",
+      "#index-note"
+    );
+
+    expect(
+      screen.getByRole("heading", { level: 2, name: "A narrow surface, held deliberately." })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "One surface, several receivers." })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Machine-readable by default." })
+    ).toBeInTheDocument();
+
+    expect(screen.getByRole("link", { name: /profile\.json/ })).toHaveAttribute(
+      "href",
+      "/profile.json"
+    );
+    expect(screen.getByRole("link", { name: /resume\.json/ })).toHaveAttribute(
+      "href",
+      "/resume.json"
+    );
   });
 
   it("renders the OMT Global landing page", () => {
