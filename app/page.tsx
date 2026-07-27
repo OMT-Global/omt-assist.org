@@ -1,428 +1,208 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { loadHomeCopy, loadProfile } from "@/lib/content";
-import { parseMarkdownBlocks } from "@/lib/markdown";
-import type { MarkdownBlockType } from "@/lib/types";
-import { CommandConsole } from "@/components/home/command-console";
-import { HeroBackdrop } from "@/components/home/hero-backdrop";
-import { Reveal } from "@/components/home/reveal";
-import { SignalNetwork } from "@/components/home/signal-network";
-import { ArrowUpRightIcon, LockIcon, ShieldCheckIcon } from "@/components/icons/animated";
-
-export const metadata: Metadata = {
-  title: {
-    absolute: "OMT Assist"
-  },
-  description:
-    "OMT Assist is a private operations assistance surface for OMT Global: runbooks, agent context, and machine-readable project data."
-};
-
-const operatingLanes = [
-  {
-    index: "01",
-    title: "Runbooks",
-    summary: "Procedures written to be executed by people and agents without improvisation."
-  },
-  {
-    index: "02",
-    title: "Agent context",
-    summary: "Machine-readable surfaces that keep automated work grounded in current facts."
-  },
-  {
-    index: "03",
-    title: "Automation",
-    summary: "Small, reviewable systems that remove repetitive operational steps."
-  },
-  {
-    index: "04",
-    title: "Operational notes",
-    summary: "Implementation records kept close to the systems they describe."
-  }
+const fireflies = [
+  { x: "9%", y: "22%", delay: "-2.1s", duration: "8s" },
+  { x: "18%", y: "68%", delay: "-5.4s", duration: "11s" },
+  { x: "31%", y: "19%", delay: "-7.2s", duration: "9s" },
+  { x: "42%", y: "77%", delay: "-3.8s", duration: "12s" },
+  { x: "57%", y: "13%", delay: "-6.1s", duration: "10s" },
+  { x: "68%", y: "69%", delay: "-1.4s", duration: "9s" },
+  { x: "79%", y: "25%", delay: "-8.3s", duration: "13s" },
+  { x: "91%", y: "61%", delay: "-4.7s", duration: "8s" }
 ];
 
-const publicArtifacts = [
-  {
-    name: "profile.json",
-    summary: "Identity, availability, and the public contact surface.",
-    href: "/profile.json"
-  },
-  {
-    name: "projects.json",
-    summary: "Curated project records with stack and status metadata.",
-    href: "/projects.json"
-  },
-  {
-    name: "resume.json",
-    summary: "Structured experience and links for agent consumption.",
-    href: "/resume.json"
-  },
-  {
-    name: "sitemap.xml",
-    summary: "Canonical routes and machine-readable metadata locations.",
-    href: "/sitemap.xml"
-  }
-];
-
-const stackChips = [
-  "Next.js",
-  "TypeScript",
-  "Tailwind CSS",
-  "GitHub Actions",
-  "Cloudflare Pages",
-  "Static export"
-];
-
-function renderIndexBlocks(blocks: MarkdownBlockType[]) {
-  return blocks.map((block, index) => {
-    if (block.type === "heading") {
-      if (block.level === 1) {
-        return null;
-      }
-      return (
-        <h3
-          key={`${block.type}-${index}`}
-          className="mb-2 font-display text-xl font-semibold tracking-tight text-foreground"
-        >
-          {block.text}
-        </h3>
-      );
-    }
-
-    if (block.type === "list") {
-      return (
-        <ul key={`${block.type}-${index}`} className="space-y-2">
-          {block.items.map((item) => (
-            <li key={item} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
-              <span className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-primary/80" aria-hidden />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      );
-    }
-
-    return (
-      <p key={`${block.type}-${index}`} className="text-sm leading-7 text-muted-foreground">
-        {block.text}
-      </p>
-    );
-  });
+function Leaf({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 90 52" aria-hidden="true">
+      <path d="M6 44C18 9 50 2 84 8 72 39 45 55 6 44Z" />
+      <path d="M13 42C34 33 54 23 76 11" className="leaf-vein" />
+    </svg>
+  );
 }
 
-export default async function HomePage() {
-  const [profile, homeCopy] = await Promise.all([loadProfile(), loadHomeCopy()]);
-  const indexBlocks = parseMarkdownBlocks(homeCopy);
-  const githubSocial = profile.socials.find((social) => social.label === "GitHub");
-
+function CalendarGlyph() {
   return (
-    <main aria-label="OMT Assist" className="relative min-h-screen overflow-hidden">
-      <HeroBackdrop />
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <rect x="12" y="16" width="40" height="36" rx="10" />
+      <path d="M12 27h40M23 11v10M41 11v10" />
+      <path d="m24 39 6 6 12-13" className="task-accent" />
+    </svg>
+  );
+}
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 sm:px-10">
-        {/* ---------------------------------------------------------- */}
-        {/* Masthead                                                    */}
-        {/* ---------------------------------------------------------- */}
-        <header className="flex items-center justify-between pt-8 sm:pt-10">
-          <div className="flex items-center gap-3">
-            <span className="status-dot" aria-hidden />
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-foreground">
-              OMT&nbsp;Assist
-            </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-muted-foreground sm:flex">
-              <LockIcon size={13} aria-hidden />
-              Private surface
-            </span>
-            <a
-              href="/omt-global/"
-              className="group inline-flex items-center gap-1.5 rounded-sm border border-border/60 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground transition hover:border-primary/50 hover:text-foreground"
-            >
-              OMT Global
-              <ArrowUpRightIcon size={13} aria-hidden />
-            </a>
-          </div>
-        </header>
+function LetterGlyph() {
+  return (
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <rect x="10" y="15" width="44" height="34" rx="10" />
+      <path d="m14 21 18 15 18-15" />
+      <path d="M15 45 27 34M49 45 37 34" />
+    </svg>
+  );
+}
 
-        {/* ---------------------------------------------------------- */}
-        {/* Hero                                                        */}
-        {/* ---------------------------------------------------------- */}
-        <section
-          aria-label="Introduction"
-          className="relative grid gap-14 pb-24 pt-16 sm:pt-24 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-center lg:gap-10"
-        >
-          <div>
-            <p className="eyebrow">
-              <span>OMT Global // operations assistance</span>
-            </p>
+function KeyGlyph() {
+  return (
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="22" cy="25" r="11" />
+      <path d="m30 33 20 20M41 44l7-7M47 50l7-7" />
+      <circle cx="22" cy="25" r="3" className="task-accent-fill" />
+    </svg>
+  );
+}
 
-            <h1 className="mt-7 font-display text-[clamp(2.9rem,7.5vw,5.8rem)] font-medium leading-[0.98] tracking-tight text-foreground">
-              The quiet layer behind
-              <br />
-              <span className="home-signal-text" data-text="operated systems.">
-                operated systems.
-              </span>
-            </h1>
+function SunGlyph() {
+  return (
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="32" cy="32" r="11" />
+      <path d="M32 7v10M32 47v10M7 32h10M47 32h10M14 14l7 7M43 43l7 7M50 14l-7 7M21 43l-7 7" />
+    </svg>
+  );
+}
 
-            <p className="mt-7 max-w-xl text-base leading-8 text-muted-foreground sm:text-lg">
-              {profile.title}. Runbooks, implementation notes, and agent-readable
-              context for OMT Global — kept deliberately small, reviewable, and
-              close to the systems they describe.
-            </p>
+function TaskPod({
+  className,
+  children
+}: {
+  className: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={`task-pod ${className}`}>
+      <div className="task-pod__halo" />
+      <div className="task-pod__face">{children}</div>
+      <i className="task-pod__spark task-pod__spark--one" />
+      <i className="task-pod__spark task-pod__spark--two" />
+    </div>
+  );
+}
 
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <a href="#artifacts" className="btn-signal">
-                Inspect the surface
-              </a>
-              <a
-                href="#index-note"
-                className="btn-ghost"
-              >
-                <ShieldCheckIcon size={15} aria-hidden />
-                Access policy
-              </a>
-            </div>
+export default function HomePage() {
+  return (
+    <main className="garden" aria-label="OMT Assist">
+      <div className="garden__sky" aria-hidden="true" />
+      <div className="garden__aurora garden__aurora--one" aria-hidden="true" />
+      <div className="garden__aurora garden__aurora--two" aria-hidden="true" />
 
-            <dl className="mt-14 grid max-w-lg gap-6 border-t border-border/40 pt-6 sm:grid-cols-2">
-              <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.26em] text-muted-foreground">
-                  Location
-                </dt>
-                <dd className="mt-1.5 text-sm font-medium text-foreground">{profile.location}</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.26em] text-muted-foreground">
-                  Availability
-                </dt>
-                <dd className="mt-1.5 text-sm font-medium text-foreground">{profile.availability}</dd>
-              </div>
-            </dl>
-          </div>
+      <header className="garden__masthead">
+        <a className="wordmark" href="/" aria-label="OMT Assist home">
+          <span className="wordmark__seed" aria-hidden="true">
+            <i />
+          </span>
+          <span>omt assist</span>
+        </a>
+        <span className="masthead-sigil" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+      </header>
 
-          <Reveal as="div" delay={180} className="lg:justify-self-end">
-            <CommandConsole
-              profileName={profile.name}
-              githubHandle={githubSocial?.handle ?? "OMT-Global/omt-assist.org"}
-            />
-          </Reveal>
-
-          <a
-            href="#lanes"
-            aria-label="Scroll to operating lanes"
-            className="scroll-cue absolute -bottom-2 left-1/2 hidden -translate-x-1/2 text-muted-foreground transition-colors hover:text-primary lg:block"
-          >
-            <svg
-              fill="none"
-              height="20"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-              viewBox="0 0 24 24"
-              width="20"
-              aria-hidden
-            >
-              <path d="M12 5v14" />
-              <path d="m19 12-7 7-7-7" />
-            </svg>
-          </a>
-        </section>
-
-        <div className="home-horizon-line" aria-hidden />
-
-        {/* ---------------------------------------------------------- */}
-        {/* Operating lanes                                             */}
-        {/* ---------------------------------------------------------- */}
-        <Reveal as="section" id="lanes" aria-label="Operating lanes" className="py-20 sm:py-24">
-          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="eyebrow">
-                <span>01 — operating lanes</span>
-              </p>
-              <h2 className="mt-4 font-display text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
-                A narrow surface, held deliberately.
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm leading-6 text-muted-foreground">
-              Everything published here exists to make operational work calmer:
-              fewer moving parts, clearer handoffs, no ambient noise.
-            </p>
-          </div>
-
-          <ol className="space-y-3">
-            {operatingLanes.map((lane, laneIndex) => (
-              <li key={lane.index}>
-                <Reveal delay={laneIndex * 90}>
-                  <div className="lane-row grid items-baseline gap-2 rounded-md border border-border/45 bg-card/40 px-5 py-5 sm:grid-cols-[4rem_13rem_1fr] sm:gap-6 sm:px-6">
-                    <span className="font-mono text-xs font-semibold tracking-[0.2em] text-primary/80">
-                      {lane.index}
-                    </span>
-                    <h3 className="font-display text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-                      {lane.title}
-                    </h3>
-                    <p className="text-sm leading-6 text-muted-foreground">{lane.summary}</p>
-                  </div>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </Reveal>
-
-        {/* ---------------------------------------------------------- */}
-        {/* Signal network + index note                                 */}
-        {/* ---------------------------------------------------------- */}
-        <section aria-label="Signal network" className="pb-20 sm:pb-24">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
-            <Reveal>
-              <p className="eyebrow">
-                <span>02 — signal network</span>
-              </p>
-              <h2 className="mt-4 font-display text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
-                One surface, several receivers.
-              </h2>
-              <p className="mt-5 max-w-md text-sm leading-7 text-muted-foreground">
-                The same content feeds people and agents from one source of
-                truth. Notes live in <code className="rounded-sm bg-primary/10 px-1.5 py-0.5 text-[0.85em] text-primary">content/</code>,
-                machine-readable artifacts are generated into{" "}
-                <code className="rounded-sm bg-primary/10 px-1.5 py-0.5 text-[0.85em] text-primary">public/</code>,
-                and deployment automation keeps them in lockstep.
-              </p>
-
-              <ul className="mt-8 space-y-4 text-sm text-muted-foreground">
-                {[
-                  "Human pages and JSON payloads are generated from the same markdown and JSON sources.",
-                  "GitHub Actions run lint, typecheck, tests, and build on every change.",
-                  "Static export lands on Cloudflare Pages behind omt-assist.org."
-                ].map((line) => (
-                  <li key={line} className="flex gap-3 leading-6">
-                    <span className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-secondary" aria-hidden />
-                    <span>{line}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-
-            <Reveal delay={140}>
-              <SignalNetwork />
-            </Reveal>
-          </div>
-        </section>
-
-        {/* ---------------------------------------------------------- */}
-        {/* Machine-readable artifacts                                  */}
-        {/* ---------------------------------------------------------- */}
-        <Reveal as="section" id="artifacts" aria-label="Machine-readable artifacts" className="pb-20 sm:pb-24">
-          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <p className="eyebrow">
-                <span>03 — artifacts</span>
-              </p>
-              <h2 className="mt-4 font-display text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
-                Machine-readable by default.
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm leading-6 text-muted-foreground">
-              Public payloads are generated on every build, so agents always read
-              what the repository actually contains.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {publicArtifacts.map((artifact, artifactIndex) => (
-              <Reveal key={artifact.name} delay={artifactIndex * 80} className="h-full">
-                <a
-                  href={artifact.href}
-                  className="endpoint-card group flex h-full flex-col rounded-md p-5"
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <code className="font-mono text-sm font-semibold text-primary">
-                      {artifact.name}
-                    </code>
-                    <ArrowUpRightIcon
-                      size={15}
-                      aria-hidden
-                      className="text-muted-foreground transition-colors group-hover:text-primary"
-                    />
-                  </div>
-                  <p className="mt-3 flex-1 text-[13px] leading-6 text-muted-foreground">
-                    {artifact.summary}
-                  </p>
-                  <span className="mt-5 text-[10px] font-semibold uppercase tracking-[0.24em] text-muted-foreground/70">
-                    GET · application/json
-                  </span>
-                </a>
-              </Reveal>
-            ))}
-          </div>
-        </Reveal>
-
-        {/* ---------------------------------------------------------- */}
-        {/* Index note + stack                                          */}
-        {/* ---------------------------------------------------------- */}
-        <section aria-label="Index note" className="pb-24">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-            <Reveal as="div" id="index-note">
-              <p className="eyebrow">
-                <span>04 — index note</span>
-              </p>
-              <div className="mt-5 space-y-4">{renderIndexBlocks(indexBlocks)}</div>
-            </Reveal>
-
-            <Reveal delay={120}>
-              <div className="rounded-md border border-border/45 bg-card/40 p-6">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
-                  Stack
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {stackChips.map((chip) => (
-                    <span
-                      key={chip}
-                      className="rounded-sm border border-border/60 bg-background/60 px-3 py-1.5 font-mono text-xs text-foreground"
-                    >
-                      {chip}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-8 border-t border-border/40 pt-6">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
-                    Source
-                  </p>
-                  {githubSocial ? (
-                    <a
-                      href={githubSocial.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="group mt-3 inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-primary"
-                    >
-                      {githubSocial.handle}
-                      <ArrowUpRightIcon size={14} aria-hidden />
-                    </a>
-                  ) : null}
-                  <p className="mt-3 text-[13px] leading-6 text-muted-foreground">
-                    Deployment automation mirrors the{" "}
-                    <code className="rounded-sm bg-primary/10 px-1.5 py-0.5 text-[0.85em] text-primary">jmcte.me</code>{" "}
-                    pattern: npm scripts, CI gates, static export.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* ---------------------------------------------------------- */}
-        {/* Footer                                                      */}
-        {/* ---------------------------------------------------------- */}
-        <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-border/40 py-10">
-          <p className="text-xs text-muted-foreground">
-            © 2026 OMT Assist · Built with Next.js, TypeScript, and Tailwind ·
-            Hosted on Cloudflare Pages
-          </p>
-          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
-            <span className="status-dot" aria-hidden />
-            All systems nominal
-          </div>
-        </footer>
+      <div className="moon" aria-hidden="true">
+        <span className="moon__face">
+          <i className="moon__eye moon__eye--left" />
+          <i className="moon__eye moon__eye--right" />
+          <i className="moon__smile" />
+        </span>
       </div>
+
+      <div className="cloud cloud--one" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </div>
+      <div className="cloud cloud--two" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </div>
+
+      <div className="vine vine--left" aria-hidden="true">
+        <Leaf className="vine__leaf vine__leaf--one" />
+        <Leaf className="vine__leaf vine__leaf--two" />
+        <Leaf className="vine__leaf vine__leaf--three" />
+      </div>
+      <div className="vine vine--right" aria-hidden="true">
+        <Leaf className="vine__leaf vine__leaf--one" />
+        <Leaf className="vine__leaf vine__leaf--two" />
+        <Leaf className="vine__leaf vine__leaf--three" />
+      </div>
+
+      {fireflies.map((fly, index) => (
+        <i
+          key={index}
+          className="firefly"
+          aria-hidden="true"
+          style={
+            {
+              "--fly-x": fly.x,
+              "--fly-y": fly.y,
+              "--fly-delay": fly.delay,
+              "--fly-duration": fly.duration
+            } as React.CSSProperties
+          }
+        />
+      ))}
+
+      <section className="garden__story">
+        <p className="garden__eyebrow">a quiet kind of wonderful</p>
+        <h1>
+          The day,
+          <br />
+          <em>gently handled.</em>
+        </h1>
+        <div className="garden__flourish" aria-hidden="true">
+          <span />
+          <i />
+          <span />
+        </div>
+      </section>
+
+      <div className="orbit-world" aria-hidden="true">
+        <div className="orbit orbit--outer" />
+        <div className="orbit orbit--inner" />
+        <TaskPod className="task-pod--calendar">
+          <CalendarGlyph />
+        </TaskPod>
+        <TaskPod className="task-pod--letter">
+          <LetterGlyph />
+        </TaskPod>
+        <TaskPod className="task-pod--key">
+          <KeyGlyph />
+        </TaskPod>
+        <TaskPod className="task-pod--sun">
+          <SunGlyph />
+        </TaskPod>
+
+        <div className="keeper">
+          <div className="keeper__glow" />
+          <Leaf className="keeper__leaf keeper__leaf--left" />
+          <Leaf className="keeper__leaf keeper__leaf--right" />
+          <div className="keeper__body">
+            <i className="keeper__ear keeper__ear--left" />
+            <i className="keeper__ear keeper__ear--right" />
+            <div className="keeper__face">
+              <i className="keeper__eye keeper__eye--left" />
+              <i className="keeper__eye keeper__eye--right" />
+              <i className="keeper__smile" />
+            </div>
+            <i className="keeper__heart" />
+          </div>
+          <div className="keeper__shadow" />
+        </div>
+      </div>
+
+      <div className="meadow" aria-hidden="true">
+        <div className="meadow__hill meadow__hill--back" />
+        <div className="meadow__hill meadow__hill--front" />
+        <div className="mushroom mushroom--one"><i /><span /></div>
+        <div className="mushroom mushroom--two"><i /><span /></div>
+        <div className="flower flower--one"><i /><span /><span /><span /></div>
+        <div className="flower flower--two"><i /><span /><span /><span /></div>
+        <div className="grass grass--one"><i /><i /><i /></div>
+        <div className="grass grass--two"><i /><i /><i /></div>
+        <div className="grass grass--three"><i /><i /><i /></div>
+      </div>
+
+      <p className="garden__whisper">always nearby</p>
+      <div className="garden__grain" aria-hidden="true" />
     </main>
   );
 }
