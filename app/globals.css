@@ -5,6 +5,26 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --background: 160 14% 4%;
+    --foreground: 45 25% 92%;
+    --primary: 95 72% 50%;
+    --primary-foreground: 150 20% 5%;
+    --secondary: 45 90% 58%;
+    --secondary-foreground: 150 20% 5%;
+    --accent: 28 85% 58%;
+    --accent-foreground: 150 20% 5%;
+    --muted: 155 10% 12%;
+    --muted-foreground: 145 8% 62%;
+    --card: 155 12% 7%;
+    --card-foreground: 45 25% 92%;
+    --border: 150 12% 24%;
+    --input: 150 12% 24%;
+    --ring: 95 72% 50%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --ink: 165 15% 3.5%;
+    --paper: 45 25% 92%;
+    --radius: 0.5rem;
   }
 
   html {
