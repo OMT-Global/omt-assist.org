@@ -9,18 +9,14 @@ on:
 jobs:
   lint-test-build:
     name: Lint, test, build
-    runs-on: [self-hosted, Linux, X64, synology, shell-only, private]
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Install Node 22
-        run: |
-          set -euo pipefail
-          NODE_VERSION=22.22.2
-          NODE_DIR="$RUNNER_TEMP/node-$NODE_VERSION"
-          mkdir -p "$NODE_DIR"
-          curl -fsSL "https://github.com/actions/node-versions/releases/download/${NODE_VERSION}-23521889093/node-${NODE_VERSION}-linux-x64.tar.gz" |
-            tar -xz --strip-components=1 --no-same-owner -C "$NODE_DIR"
-          echo "$NODE_DIR/bin" >> "$GITHUB_PATH"
+      - name: Setup Node 22.22.2
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.22.2"
+          cache: npm
       - name: Show runner Node
         run: |
           node --version
